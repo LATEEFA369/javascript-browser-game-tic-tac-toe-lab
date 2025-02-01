@@ -1,0 +1,103 @@
+// /*-------------------------------- Constants --------------------------------*/
+
+
+const words = ['smile','happy','good']
+
+// /*-------------------------------- Variables --------------------------------*/
+
+let guessedLetters = [];
+let incorrectAttempts = [];  
+let currentLetter = '';
+let currentWord = '';
+const Message = document.querySelector('.Message');
+const incorrect = document.querySelector('#output');
+const squares = document.querySelectorAll('.sqr');
+const guessInput = document.getElementById('guess');
+console.log(guessInput);
+const check = document.querySelector('#check')
+
+
+  
+// /*------------------------ Cached Element References ------------------------*/
+
+
+
+
+
+// /*----------------------------- Event Listeners -----------------------------*/
+check.addEventListener('click',compareletters)
+
+
+
+
+
+
+
+// /*-------------------------------- Functions --------------------------------*/
+
+
+
+function startGame() {
+    const index = Math.floor(Math.random() * words.length); /////////// picked random wards 
+    currentWord = words[index];
+    // guessedLetters = [];  /////restart 
+    // incorrectAttempts = [];  
+    squares.forEach(sqr => sqr.textContent = ''); 
+    Message.textContent = ""; 
+    console.log(currentWord);
+};
+
+startGame()
+function compareletters (){
+
+    
+  console.log( currentWord);
+    if ( currentWord.includes(currentLetter)){
+        guessedLetters.push(currentLetter);
+        console.log("true");
+        checkPosition();
+        
+        
+    } else {
+        console.log("false")
+        incorrectAttempts.push(currentLetter);
+        incorrect.textContent = currentLetter;/////////// show incorrect letters 
+    }
+};
+
+
+function checkPosition(currentWord,currentLetter){
+const wordArray = currentWord.split("");/////////////////////// to put picked letters words in array 
+
+for (i=0; i<wordArray.length ; i++) {/////////////////// check correct letter position 
+
+    if (currentLetter === wordArray[i] ){
+        squares[i].textContent = currentLetter ///////////// show correct letter in position
+
+        
+    }
+    
+}
+};
+
+
+function checkwinner(){
+if(incorrectAttempts.length > 6 ){//////////////// limited attempts
+    Message.textContent = "Game Over! You've run out of attempts.";
+    check.disabled = true; 
+    guessInput.disabled = true;
+    return;
+  }
+
+
+  const wordArray = currentWord.split("");
+if ( guessedLetters.length === wordArray.length && 
+    guessedLetters.every((value, index) => value === wordArray[index])){
+        Message.textContent = "YOU ARE WIN!";
+        check.disabled = true; 
+        guessInput.disabled = true;
+        return;
+      }
+    };
+
+
